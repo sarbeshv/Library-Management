@@ -1,7 +1,12 @@
 package com.project.LibraryManagement.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,21 +19,24 @@ import lombok.ToString;
 @Table(name ="Books")
 @Getter
 @Setter
-
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class Books {
 	
 	@Id
-	private int book_id;
-	public Books(int book_id, String book_name, String genre) {
-		super();
-		this.book_id = book_id;
-		this.book_name = book_name;
-		this.genre = genre;
-	}
-	private String book_name;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int bookId;
+	
+	
+	private String bookName;
+	
+	@ManyToOne
+	private Users issuedUser;
+
+	private int noOfDays;
+	
+	@Column(name="genre")
 	private String genre;
 
 }
