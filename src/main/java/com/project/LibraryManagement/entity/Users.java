@@ -13,19 +13,20 @@ import jakarta.persistence.Table;
 public class Users {
 
 	@Id
-	private int email;
+	private int userId;
 	private String userName;
+	private String payment;
 	private String password;
 	
 	@OneToMany(mappedBy = "user")
 	private List<Books> BookList;
 
 	public int getUserId() {
-		return email;
+		return userId;
 	}
 
 	public void setUserId(int userId) {
-		this.email = userId;
+		this.userId = userId;
 	}
 
 	public String getUserName() {
@@ -34,6 +35,14 @@ public class Users {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getPayment() {
+		return payment;
+	}
+
+	public void setPayment(String payment) {
+		this.payment = payment;
 	}
 
 	public String getPassword() {
@@ -54,14 +63,15 @@ public class Users {
 
 	@Override
 	public String toString() {
-		return "Users [userId=" + email + ", userName=" + userName + ", password=" + password + ", BookList="
-				+ BookList + "]";
+		return "Users [userId=" + userId + ", userName=" + userName + ", payment=" + payment + ", password=" + password
+				+ ", BookList=" + BookList + "]";
 	}
 
-	public Users(int userId, String userName, String password, List<Books> bookList) {
+	public Users(int userId, String userName, String payment, String password, List<Books> bookList) {
 		super();
-		this.email = userId;
+		this.userId = userId;
 		this.userName = userName;
+		this.payment = payment;
 		this.password = password;
 		BookList = bookList;
 	}
@@ -70,6 +80,9 @@ public class Users {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	
+	
 	
 
 }

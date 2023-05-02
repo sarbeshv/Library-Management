@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.project.LibraryManagement.entity.Books;
 
 @Repository
-public interface LibraryRespository extends JpaRepository<Books,Integer>{
+public interface BookRespository extends JpaRepository<Books,Integer>{
 	
 @Query(value = "select * from Books b where b.genre =:genre" , nativeQuery = true )
 public List<Books> getBooksByGenre(String genre);
