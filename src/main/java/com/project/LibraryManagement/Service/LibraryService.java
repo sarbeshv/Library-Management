@@ -15,10 +15,10 @@ public class LibraryService {
 	@Autowired
 	LibraryRespository libraryRespository;
 	
-	public Books addBook(Books book)  {
-//		Books b = libraryRespository.findById(book.getBook_id()).orElse(null);
-//		if(b !=null)
-//			throw new BookNotFoundException("Book id already exist");
+	public Books addBook(Books book) throws BookNotFoundException  {
+		Books b = libraryRespository.findById(book.getBookId()).orElse(null);
+		if(b !=null)
+			throw new BookNotFoundException("Book id already exist");
 		book = libraryRespository.save(book);
 		return book;
 	}
@@ -26,16 +26,20 @@ public class LibraryService {
 		List<Books> bookList = libraryRespository.findAll();
 		return bookList;
 	}
-	public Books viewBookById(Integer id)  {
+	public Books viewBookById(Integer id) throws BookNotFoundException  {
 		Books book = libraryRespository.findById(id).orElse(null);
-//		if(book == null)
-//			throw new BookNotFoundException("Book id Not exist");
+		if(book == null)
+			throw new BookNotFoundException("Book id Not exist");
 		return book;
 	}
-	public List<Books> getBookByGenre(String genre )throws BookNotFoundException{
-		List<Books> book = libraryRespository.getBooksByGenre(genre);
-		if(book.size()==0)
-				throw new BookNotFoundException("No Book found");
-		return book;
+//	public List<Books> getBookByGenre(String genre )throws BookNotFoundException{
+//		List<Books> book = libraryRespository.getBooksByGenre(genre);
+//		if(book.size()==0)
+//				throw new BookNotFoundException("No Book found");
+//		return book;
+//	}
+	public String UpdateStatus(Integer id) {
+		libraryRespository.updateStatus(id);
+		return " Status Updated Successfully";
 	}
 }
