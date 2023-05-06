@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.LibraryManagement.Exception.BookNotFoundException;
 import com.project.LibraryManagement.Exception.UserNotFoundException;
 import com.project.LibraryManagement.Service.UserService;
 import com.project.LibraryManagement.entity.Users;
@@ -25,8 +28,8 @@ public class UsersController {
 		return users;
 	}
 	
-	@GetMapping(value = "/findByUserId")
-	public Users findByUserId(int id){
+	@GetMapping(value = "/findByUserId/{id}")
+	public Users findByUserId(@PathVariable int id){
 		Users user = null;
 		try {
 			user = userService.GetUserById(id);
@@ -40,6 +43,13 @@ public class UsersController {
 	@GetMapping(value = "/findAllUsers")
 	public List<Users> findAllUsers(){
 		return userService.getAllUsers();
+	}
+	
+	
+	@PutMapping(value = "/updatePayment/{id}")
+	public Integer UpdatePayment(@PathVariable("id") int id) throws BookNotFoundException {
+		return userService.calculatePayment(id);
+		
 	}
 	
 }
