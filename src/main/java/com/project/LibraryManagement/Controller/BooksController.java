@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.LibraryManagement.Exception.BookNotFoundException;
 import com.project.LibraryManagement.Exception.StatusAlreadyUpdatedException;
 import com.project.LibraryManagement.Service.BookService;
+import com.project.LibraryManagement.common.APIResponse;
 import com.project.LibraryManagement.entity.Books;
 
 @RestController
@@ -22,54 +23,47 @@ public class BooksController {
 	@Autowired
 	BookService BookService;
 	
-	@PostMapping(value="/addBook")
-	public Books addBook(@RequestBody Books book) throws BookNotFoundException {
-//		try {
-		return	BookService.addBook(book);
-//		} catch (BookNotFoundException e) {
-//			e.toString();
-//		}
-//		return "Book added successfully";
-		
-	}
+	
 	
 	@GetMapping(value ="/AllBooks")
-	public List<Books> AllBooks(){
+	public APIResponse AllBooks(){
 		return BookService.getAllBooks();
 	}
+
 	
 	@GetMapping(value = "/GetById/{id}")
-	public Books GetById(@PathVariable("id") int id){
-		Books book = null;
+	public APIResponse GetById(@PathVariable("id") int id){
+		APIResponse Response= null;
 		try {
-			 book =BookService.viewBookById(id);
+			 Response =BookService.viewBookById(id);
 		} catch (BookNotFoundException e) {
 			
 			e.toString();
 		}
-		return book;
+		return Response;
 	}
+//	@GetMapping(value ="/GetByGenre/{input}")
+//	public APIResponse GetBooksByGenre(@PathVariable("input") String input){
+//	      return BookService.getBookByGenre(input);
+//	}
 	
-	@PutMapping(value ="/UpdateStatus/{id}/{Days}/{issuedUser}")
-	public String updateBookStatus(@PathVariable("id") int id,@PathVariable("Days")int Days,@PathVariable("issuedUser")int issuedUser ) {
-		String status = null;
-		try {
-			status = BookService.UpdateStatus(id,Days,issuedUser);
-		} catch (StatusAlreadyUpdatedException e) {
+	@PutMapping(value ="/IssueBook/{id}/{Days}/{issuedUser}")
+	public APIResponse updateBookStatus(@PathVariable("id") int id,@PathVariable("Days")int Days,@PathVariable("issuedUser")int issuedUser ) {
+//		try {
 			
-			e.toString();
-		}
-		return "Book Rented Successfully";
+		return BookService.UpdateStatus(id,Days,issuedUser);
+//		} catch (StatusAlreadyUpdatedException e) {
+//			
+//			e.toString();
+//		}
+	//	return apiResponse;
 	}
 	
 	@PutMapping(value ="/availableUpdate/{id}")
-	public String availUpdateBookStatus(@PathVariable("id")int id) {
+	public APIResponse availUpdateBookStatus(@PathVariable("id")int id) {
 		return BookService.AvailUpdateStatus(id);
 	}
+
 	
-	@DeleteMapping(value="/deleteBook/{id}")
-	public String DeleteById(@PathVariable("id")int id) {
-		return BookService.deleteById(id);
-	}
 
 }

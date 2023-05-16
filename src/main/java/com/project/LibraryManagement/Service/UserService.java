@@ -12,6 +12,7 @@ import com.project.LibraryManagement.Respository.BookRespository;
 import com.project.LibraryManagement.Respository.UsersRespository;
 import com.project.LibraryManagement.entity.Books;
 import com.project.LibraryManagement.entity.Users;
+import com.project.LibraryManagement.util.JwtUtils;
 
 @Service
 public class UserService {
@@ -23,6 +24,7 @@ public class UserService {
 	private BookRespository bookRepo;
 
 	
+	
 	//add
 	public Users addUsers(Users users) {
 		return userRepo.save(users);
@@ -31,43 +33,44 @@ public class UserService {
 	
 	//find all
 	public List<Users> getAllUsers() {
-		List<Users> bookList = userRepo.findAll();
+		List<Users> bookList = (List<Users>) userRepo.findAll();
 		return bookList;
 	}
       
 
 	// find
-	public Users GetUserById(Integer id) throws UserNotFoundException {
+	public Users GetUserById(Long id) throws UserNotFoundException {
 		Users user = userRepo.findById(id).orElse(null);
 		if (user == null)
 			throw new UserNotFoundException("User id Not exist");
 		return user;
 	}
+	
 
-	// payment
-	public Integer calculatePayment(Integer id) throws BookNotFoundException {
-		Users user = userRepo.findById(id).orElse(null);
-		Books book = bookRepo.findById(id).orElse(null);
-		Integer payment = 0;
-		Integer count = user.getBookList().size();
-		if (count < 0)
-			throw new BookNotFoundException("User does not rented any books");
-
-		payment = count * book.getNoOfDays() * 50;
-		user.setPayment(Integer.toString(payment));
-		userRepo.save(user);
-
-		return payment;
+//	// payment
+//	public Integer calculatePayment(Long id) throws BookNotFoundException {
+//		Users user = userRepo.findById(id).orElse(null);
+//		Books book = null;
+//		Integer payment = 0;
+//		Integer count = user.getBookList().size();
+//		if (count < 0)
+//			throw new BookNotFoundException("User does not rented any books");
+//
+//		payment = count * book.getNoOfDays() * 50;
+//		user.setPayment(Integer.toString(payment));
+//		userRepo.save (user);
+//
+//		return payment;
 
 	}
 	
-	public Integer NoOfBooksRented() {
-		Users user = null;
-		int count = 0;
-		for (Books i : user.getBookList()) {
-			count++;
-		}
-		return count;
-	}
+//	public Integer NoOfBooksRented() {
+//		Users user = null;
+//		int count = 0;
+//		for (Books i : user.getBookList()) {
+//			count++;
+//		}
+//		return count;
+//	}
 
-}
+

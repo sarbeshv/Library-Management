@@ -1,5 +1,6 @@
 package com.project.LibraryManagement.Service;
 
+import com.project.LibraryManagement.data.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.project.LibraryManagement.Exception.BookNotFoundException;
 import com.project.LibraryManagement.Exception.StatusAlreadyUpdatedException;
 import com.project.LibraryManagement.Respository.BookRespository;
+import com.project.LibraryManagement.common.APIResponse;
 import com.project.LibraryManagement.entity.Books;
 
 @Service
@@ -17,50 +19,54 @@ public class BookService {
 	@Autowired
 	BookRespository bookRespository;
 	
-	public Books addBook(Books book) throws BookNotFoundException  {
-		Books b = bookRespository.findById(book.getBookId()).orElse(null);
-		if(b !=null)
-			throw new BookNotFoundException("Book id already exist");
-		book = bookRespository.save(book);
-		return book;
+	BookData bookData = new BookData();
+	APIResponse response = new APIResponse();
+	
+	
+	public APIResponse getAllBooks(){
+		
+		 List<Books> book = bookRespository.findAll();
+		 bookData.setBooks(book);
+		 response.setData(bookData);
+		return response;
 	}
-	public List<Books> getAllBooks(){
-		List<Books> bookList = bookRespository.findAll();
-		return bookList;
-	}
-	public Books viewBookById(Integer id) throws BookNotFoundException  {
+	public APIResponse viewBookById(Integer id) throws BookNotFoundException  {
+	
+		BookData viewData = new BookData();
 		Books book = bookRespository.findById(id).orElse(null);
+		viewData.setBook(book);
+		response.setData(viewData);
 		if(book == null)
 			throw new BookNotFoundException("Book id Not exist");
-		return book;
+		return response;
 	}
 	
 	//find by genre 
-	public List<Books> getBookByGenre(String genre )throws BookNotFoundException{
-		List<Books> book = libraryRespository.getBooksByGenre(genre);
-		if(book.size()==0)
-				throw new BookNotFoundException("No Book found");
-		return book;
+	public APIResponse getBookByGenre(String genre ){
+		List<Books> book = bookRespository.getBooksByGenre(genre);
+		bookData.setBooks(book);
+		response.setData(bookData);
+//		if(book.size()==0)
+//				throw new BookNotFoundException("No Book found");
+		return response;
 	}
 	
 	
 	// update rented
-	public String UpdateStatus(int id,int NoOfDays, int issuedUser) throws StatusAlreadyUpdatedException {
+	public APIResponse UpdateStatus(int id,int NoOfDays, int issuedUser)  {
 		bookRespository.updateStatus(id,NoOfDays,issuedUser);
 		Books book = bookRespository.findById(id).orElse(null);
-		if(book.getStatus().contains("Rented"))
-			throw new  StatusAlreadyUpdatedException("Book Already Rented ");
-		return " Status Updated Successfully";
+//		if(book.getStatus().contains("Rented"))
+//			throw new  StatusAlreadyUpdatedException("Book Already Rented ");
+		response.setData(" Status Updated Successfully");
+		return response;
 	}
 	
 	// update available
-	public String AvailUpdateStatus(int id) {
+	public APIResponse AvailUpdateStatus(int id) {
 		bookRespository.availUpdateStatus(id);
-		return " Status Updated Successfully";
+		response.setData( " Status Updated Successfully");
+		return response;
 	}
 	
-	public String deleteById(int id) {
-		bookRespository.deleteById(id);
-		return "Book is deleted";
-	}
 }

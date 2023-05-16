@@ -1,19 +1,24 @@
 package com.project.LibraryManagement.entity;
 
+import java.util.*;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.project.LibraryManagement.common.Constant;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PostPersist;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,78 +28,166 @@ import jakarta.persistence.Table;
 public class Users {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int userId;
+	@GeneratedValue
+	private Long userId;
+	@Column(nullable = false)
+	private String email;
+	@Column(nullable = false)
+	private String userType = Constant.USER_TYPE.NORMAL;
+	@Column(nullable = false)
 	private String userName;
-	private String payment;
+	@Column(nullable = false)
 	private String password;
+	private Integer loginCount = 0;
+	private String ssoType;
+	private Date loginAt;
+	private Date createdAt;
+	private Date updatedAt;
 	
-	@OneToMany(mappedBy = "issuedUser",fetch = FetchType.EAGER)
-	@JsonIgnore
-	private List<Books> BookList;
-
-	public int getUserId() {
+	
+		
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+
+
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+	public String getUserType() {
+		return userType;
+	}
+
+
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+
 
 	public String getUserName() {
 		return userName;
 	}
 
+
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-	public String getPayment() {
-		return payment;
-	}
 
-	public void setPayment(String payment) {
-		this.payment = payment;
-	}
 
 	public String getPassword() {
 		return password;
 	}
 
+
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public List<Books> getBookList() {
-		return BookList;
+
+
+	public Integer getLogin_count() {
+		return loginCount;
 	}
 
-	public void setBookList(List<Books> bookList) {
-		BookList = bookList;
+
+
+	public void setLogin_count(Integer login_count) {
+		this.loginCount = login_count;
 	}
 
-	@Override
-	public String toString() {
-		return "Users [userId=" + userId + ", userName=" + userName + ", payment=" + payment + ", password=" + password
-				+ ", BookList=" + BookList + "]";
+
+
+	public String getSsoType() {
+		return ssoType;
 	}
 
-	public Users(int userId, String userName, String payment, String password, List<Books> bookList) {
-		super();
-		this.userId = userId;
-		this.userName = userName;
-		this.payment = payment;
-		this.password = password;
-		BookList = bookList;
+
+
+	public void setSsoType(String ssoType) {
+		this.ssoType = ssoType;
 	}
 
-	public Users() {
-		super();
-		// TODO Auto-generated constructor stub
+
+
+	public Date getLoginAt() {
+		return loginAt;
+	}
+
+
+
+	public void setLoginAt(Date loginAt) {
+		this.loginAt = loginAt;
+	}
+
+
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+
+
+	@PrePersist
+	public void onSave() {
+		
+		Date currentDateTime = new Date();
+		
+		
+			this.createdAt = currentDateTime;
+		    this.updatedAt = currentDateTime;
+		
+	}
+	
+	@PostPersist
+	public void onUpdate() {
+		
+		Date currentDateTime = new Date();
+		this.updatedAt = currentDateTime;
+
+
 	}
 
 	
 	
 	
-
+ 
 }

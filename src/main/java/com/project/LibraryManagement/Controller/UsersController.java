@@ -8,18 +8,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.LibraryManagement.Exception.BookNotFoundException;
 import com.project.LibraryManagement.Exception.UserNotFoundException;
 import com.project.LibraryManagement.Service.UserService;
 import com.project.LibraryManagement.entity.Users;
+import com.project.LibraryManagement.util.JwtUtils;
 
 @RestController
 public class UsersController {
   
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	private JwtUtils jwtUtils;
 	
 	@PostMapping(value = "/AddUser")
 	public Users AddUsers(@RequestBody Users users ) {
@@ -29,7 +34,7 @@ public class UsersController {
 	}
 	
 	@GetMapping(value = "/findByUserId/{id}")
-	public Users findByUserId(@PathVariable int id){
+	public Users findByUserId(@PathVariable Long id){
 		Users user = null;
 		try {
 			user = userService.GetUserById(id);
@@ -40,16 +45,20 @@ public class UsersController {
 		return user;
 	}
 	
+	
 	@GetMapping(value = "/findAllUsers")
-	public List<Users> findAllUsers(){
+	public List<Users> findAllUsers(@RequestHeader(value="authorization")String auth) throws Exception{
+		
+		jwtUtils.verify(auth);
+		
 		return userService.getAllUsers();
 	}
 	
 	
-	@PutMapping(value = "/updatePayment/{id}")
-	public Integer UpdatePayment(@PathVariable("id") int id) throws BookNotFoundException {
-		return userService.calculatePayment(id);
-		
-	}
+//	@PutMapping(value = "/updatePayment/{id}")
+//	public Integer UpdatePayment(@PathVariable("id") int id) throws BookNotFoundException {
+//		return userService.calculatePayment(id);
+//		
+//	}
 	
 }
