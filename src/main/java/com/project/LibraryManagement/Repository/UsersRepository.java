@@ -1,6 +1,5 @@
-package com.project.LibraryManagement.Respository;
+package com.project.LibraryManagement.Repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.project.LibraryManagement.entity.Users;
 
 @Repository
-public interface UsersRespository extends CrudRepository<Users,Long> {
+public interface UsersRepository extends CrudRepository<Users,Long> {
 
 	Users findOneByEmailIgnoreCaseAndPassword(String email, String password);
 	

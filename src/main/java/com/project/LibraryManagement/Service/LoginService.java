@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.LibraryManagement.DTO.LoginRequestDTO;
 import com.project.LibraryManagement.DTO.SignUpRequestDTO;
-import com.project.LibraryManagement.Respository.UsersRespository;
+import com.project.LibraryManagement.Repository.UsersRepository;
 import com.project.LibraryManagement.common.APIResponse;
 import com.project.LibraryManagement.common.BadRequestException;
 import com.project.LibraryManagement.common.error;
@@ -20,7 +20,7 @@ import com.project.LibraryManagement.validator.signUpValidator;
 public class LoginService {
 	
 	@Autowired
-	private UsersRespository userRepo;
+	private UsersRepository userRepo;
 	
 	@Autowired
 	private signUpValidator signValidator;

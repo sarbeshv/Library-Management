@@ -3,6 +3,7 @@ package com.project.LibraryManagement.entity;
  
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.project.LibraryManagement.common.Constant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,23 +28,17 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "bookId")
+
 public class Books {
 	
+	
+    @GeneratedValue
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int bookId;
 	
 	private String bookName;
 	private String Author;
-	private  String status;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="issuedUser")
-	private Users issuedUser;
-	
-	@Column(nullable = true)
-	private Integer noOfDays;
+	private Integer statusOfBook;
 	
 	@Column(name="genre")
 	private String genre;
@@ -72,28 +67,12 @@ public class Books {
 		Author = author;
 	}
 
-	public String getStatus() {
-		return status;
+	public Integer getStatusOfBook() {
+		return statusOfBook;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public Users getIssuedUser() {
-		return issuedUser;
-	}
-
-	public void setIssuedUser(Users issuedUser) {
-		this.issuedUser = issuedUser;
-	}
-
-	public Integer getNoOfDays() {
-		return noOfDays;
-	}
-
-	public void setNoOfDays(Integer noOfDays) {
-		this.noOfDays = noOfDays;
+	public void setStatusOfBook(Integer statusOfBook) {
+		this.statusOfBook = statusOfBook;
 	}
 
 	public String getGenre() {
@@ -104,28 +83,18 @@ public class Books {
 		this.genre = genre;
 	}
 
-	@Override
-	public String toString() {
-		return "Books [bookId=" + bookId + ", bookName=" + bookName + ", Author=" + Author + ", status=" + status
-				+ ", issuedUser=" + issuedUser + ", noOfDays=" + noOfDays + ", genre=" + genre + "]";
-	}
-
-	public Books(int bookId, String bookName, String author, String status, Users issuedUser, Integer noOfDays,
-			String genre) {
+	public Books(int bookId, String bookName, String author, Integer statusOfBook, String genre) {
 		super();
 		this.bookId = bookId;
 		this.bookName = bookName;
 		Author = author;
-		this.status = status;
-		this.issuedUser = issuedUser;
-		this.noOfDays = noOfDays;
+		this.statusOfBook = statusOfBook;
 		this.genre = genre;
 	}
 
 	public Books() {
-		super();
 		// TODO Auto-generated constructor stub
 	}
 
-		
+	
 }

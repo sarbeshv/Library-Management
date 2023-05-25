@@ -6,12 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.project.LibraryManagement.Exception.BookNotFoundException;
 import com.project.LibraryManagement.Exception.UserNotFoundException;
 import com.project.LibraryManagement.Service.UserService;
 import com.project.LibraryManagement.entity.Users;
@@ -35,7 +31,8 @@ public class UsersController {
 	
 	@GetMapping(value = "/findByUserId/{id}")
 	public Users findByUserId(@PathVariable Long id){
-		Users user = null;
+	   
+		Users user = new Users();
 		try {
 			user = userService.GetUserById(id);
 		} catch (UserNotFoundException e) {
@@ -47,9 +44,7 @@ public class UsersController {
 	
 	
 	@GetMapping(value = "/findAllUsers")
-	public List<Users> findAllUsers(@RequestHeader(value="authorization")String auth) throws Exception{
-		
-		jwtUtils.verify(auth);
+	public List<Users> findAllUsers(){
 		
 		return userService.getAllUsers();
 	}

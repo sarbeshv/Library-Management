@@ -2,6 +2,8 @@ package com.project.LibraryManagement.util;
 
 import org.springframework.stereotype.Component;
 import java.util.*;
+
+import com.project.LibraryManagement.Exception.AccessDeniedException;
 import com.project.LibraryManagement.entity.Users;
 
 import io.jsonwebtoken.Claims;
@@ -26,7 +28,6 @@ public class JwtUtils {
 				.setExpiration(ExpireAt);
 		
 		
-		claims.put("type", user.getUserType());
 		claims.put("name", user.getUserName());
 		claims.put("email", user.getEmail());
 		// generate token using claims
@@ -39,13 +40,14 @@ public class JwtUtils {
 		
 	}
 	
-	public void verify(String authization) throws Exception {
+	public void verify(String authorization) throws Exception {
 	
 		try {
-		Jwts.parser().setSigningKey(secret).parseClaimsJws(authization);
+			  Jwts.parser().setSigningKey(secret).parseClaimsJws(authorization).getBody();
+
 		}
 		catch(Exception e) {
-			throw new Exception();
+			throw new AccessDeniedException("Access Denied");
 		}
 		}
 }

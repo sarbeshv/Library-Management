@@ -1,4 +1,4 @@
-package com.project.LibraryManagement.Respository;
+package com.project.LibraryManagement.Repository;
 
 import java.util.List;
 
@@ -13,10 +13,9 @@ import com.project.LibraryManagement.entity.Books;
 import jakarta.transaction.Transactional;
 
 @Repository
-public interface BookRespository extends JpaRepository<Books, Integer> {
+public interface BookRepository extends JpaRepository<Books, Integer> {
 
-	@Query(value = "select * from Books b where b.genre =:genre", nativeQuery = true)
-	public List<Books> getBooksByGenre(String genre);
+
 
 	@Transactional
 	@Modifying
@@ -28,4 +27,7 @@ public interface BookRespository extends JpaRepository<Books, Integer> {
 	@Modifying
 	@Query(value = "update Books b set b.status =\"Available\" ,b.no_of_days=0 ,b.issued_user=0 where b.book_Id =?1", nativeQuery = true)
 	public void availUpdateStatus(int bookId);
+
+
+	public List<Books> findByGenreIgnoreCase(String genre);
 }

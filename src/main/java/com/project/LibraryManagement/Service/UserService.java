@@ -1,27 +1,23 @@
 package com.project.LibraryManagement.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.LibraryManagement.Exception.BookNotFoundException;
 import com.project.LibraryManagement.Exception.UserNotFoundException;
-import com.project.LibraryManagement.Respository.BookRespository;
-import com.project.LibraryManagement.Respository.UsersRespository;
-import com.project.LibraryManagement.entity.Books;
+import com.project.LibraryManagement.Repository.BookRepository;
+import com.project.LibraryManagement.Repository.UsersRepository;
 import com.project.LibraryManagement.entity.Users;
-import com.project.LibraryManagement.util.JwtUtils;
 
 @Service
 public class UserService {
 
 	@Autowired
-	private UsersRespository userRepo;
+	private UsersRepository userRepo;
 
 	@Autowired
-	private BookRespository bookRepo;
+	private BookRepository bookRepo;
 
 	
 	

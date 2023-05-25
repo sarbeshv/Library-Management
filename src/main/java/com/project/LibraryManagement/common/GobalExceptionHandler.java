@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.project.LibraryManagement.Exception.AccessDeniedException;
+
 @ControllerAdvice
 public class GobalExceptionHandler {
 
@@ -29,13 +31,12 @@ public class GobalExceptionHandler {
 		
 	}
 	@ExceptionHandler
-	public ResponseEntity handleBadRequestException(BadRequestException e) {
+	public ResponseEntity handleAccessDeniedException(AccessDeniedException e) {
 		
 		APIResponse response = new APIResponse();
-		response.setError(e.getErrors());
-		response.setStatus(HttpStatus.BAD_REQUEST.value());
-		
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(response);
+		response.setStatus(HttpStatus.UNAUTHORIZED.value());
+		response.setError(" UnAuthorized ");
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED.value()).body(response);
 		
 		
 	}
