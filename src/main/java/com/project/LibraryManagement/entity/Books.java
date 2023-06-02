@@ -1,15 +1,12 @@
 package com.project.LibraryManagement.entity;
 
  
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.project.LibraryManagement.common.Constant;
 
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -34,20 +31,25 @@ public class Books {
 	
     @GeneratedValue
 	@Id
-	private int bookId;
+	private Long bookId;
 	
 	private String bookName;
 	private String Author;
 	private Integer statusOfBook;
 	
-	@Column(name="genre")
+
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	@Nonnull
+	private Category category;
+	
 	private String genre;
 
-	public int getBookId() {
+	public Long getBookId() {
 		return bookId;
 	}
 
-	public void setBookId(int bookId) {
+	public void setBookId(Long bookId) {
 		this.bookId = bookId;
 	}
 
@@ -75,6 +77,14 @@ public class Books {
 		this.statusOfBook = statusOfBook;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	public String getGenre() {
 		return genre;
 	}
@@ -83,18 +93,26 @@ public class Books {
 		this.genre = genre;
 	}
 
-	public Books(int bookId, String bookName, String author, Integer statusOfBook, String genre) {
+	public Books(Long bookId, String bookName, String author, Integer statusOfBook, Category category, String genre) {
 		super();
 		this.bookId = bookId;
 		this.bookName = bookName;
 		Author = author;
 		this.statusOfBook = statusOfBook;
+		this.category = category;
 		this.genre = genre;
 	}
 
+	@Override
+	public String toString() {
+		return "Books [bookId=" + bookId + ", bookName=" + bookName + ", Author=" + Author + ", statusOfBook="
+				+ statusOfBook + ", category=" + category + ", genre=" + genre + "]";
+	}
+
 	public Books() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
+
 }

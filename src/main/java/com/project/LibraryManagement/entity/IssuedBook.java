@@ -1,38 +1,48 @@
 package com.project.LibraryManagement.entity;
 
-
+import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 import jakarta.annotation.Nonnull;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
-public class IssuedBook {
+@Table(name = "issued_book")
+public class IssuedBook implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	private Long id;
+	
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "book_id")
 	@Nonnull
 	private Books book;
 	
-	
-
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "issue_id")
+	@Nonnull
 	private Issue issue;
 	
+	@Column(name = "returned")
 	private Integer returned;
 
 	public Long getId() {
@@ -66,26 +76,6 @@ public class IssuedBook {
 	public void setReturned(Integer returned) {
 		this.returned = returned;
 	}
-
-	public IssuedBook(Long id, Books book, Issue issue, Integer returned) {
-		super();
-		this.id = id;
-		this.book = book;
-		this.issue = issue;
-		this.returned = returned;
-	}
-
-	public IssuedBook() {
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public String toString() {
-		return "IssuedBook [id=" + id + ", book=" + book + ", issue=" + issue + ", returned=" + returned + "]";
-	}
-
-
-
-
+	
 	
 }

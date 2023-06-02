@@ -12,17 +12,18 @@ import com.project.LibraryManagement.entity.Issue;
 import com.project.LibraryManagement.entity.Member;
 
 
+
 @Service
 public class IssueService {
 
 	@Autowired
 	private IssueRepository issueRepository;
 	
-	public List<Issue> getAllIssue() {
+	public List<Issue> getAll() {
 		return issueRepository.findAll();
 	}
 	
-	public Issue getIssueById(Long id) {
+	public Issue get(Long id) {
 		return issueRepository.findById(id).get();
 	}
 	
@@ -30,7 +31,7 @@ public class IssueService {
 		return issueRepository.findByReturned( Constant.BOOK_NOT_RETURNED );
 	}
 	
-	public Issue addIssue(Issue issue) {
+	public Issue addNew(Issue issue) {
 		issue.setIssueDate( new Date() );
 		issue.setReturned( Constant.BOOK_NOT_RETURNED );
 		return issueRepository.save(issue);

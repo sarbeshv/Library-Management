@@ -16,8 +16,8 @@ public class JwtUtils {
 	private static String secret = "This is secret";
 	public String generateJwt(Users user) {
 	    long milliTime = System.currentTimeMillis();
-	    long tenMinuteInMills = 10 * 60 * 1000;
-	    long ExpireTime = milliTime + tenMinuteInMills;
+	    long OneHourInMills = 1 * 60 * 60 * 1000;
+	    long ExpireTime = milliTime + OneHourInMills;
 		Date issueAt = new Date(milliTime);
 		Date ExpireAt = new Date (ExpireTime);
 		

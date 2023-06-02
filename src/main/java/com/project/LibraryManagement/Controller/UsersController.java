@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.LibraryManagement.Exception.UserNotFoundException;
 import com.project.LibraryManagement.Service.UserService;
 import com.project.LibraryManagement.entity.Users;
-import com.project.LibraryManagement.util.JwtUtils;
 
 @RestController
 public class UsersController {
@@ -19,8 +18,8 @@ public class UsersController {
 	@Autowired
 	UserService userService;
 	
-	@Autowired
-	private JwtUtils jwtUtils;
+//	@Autowired
+//	private JwtUtils jwtUtils;
 	
 	@PostMapping(value = "/AddUser")
 	public Users AddUsers(@RequestBody Users users ) {

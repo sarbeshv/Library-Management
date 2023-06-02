@@ -38,6 +38,17 @@ import com.project.LibraryManagement.entity.Member;
 		public void delete(Long id) {
 			memberRepository.deleteById(id);
 		}
+		public Member get(Long id) {
+			return memberRepository.findById(id).get();
+		}
+		public boolean checkIfMemberExistsByEmail(String email) {
+		    return memberRepository.existsByEmail(email);
+		}
+
+		public boolean checkIfMemberExistsByPhoneNumber(String phoneNumber) {
+		    return memberRepository.existsByPhoneNumber(phoneNumber);
+		}
+
 		
 
 }

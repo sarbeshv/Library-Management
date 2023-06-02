@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.LibraryManagement.Exception.UserNotFoundException;
-import com.project.LibraryManagement.Repository.BookRepository;
 import com.project.LibraryManagement.Repository.UsersRepository;
 import com.project.LibraryManagement.entity.Users;
 
@@ -15,9 +14,6 @@ public class UserService {
 
 	@Autowired
 	private UsersRepository userRepo;
-
-	@Autowired
-	private BookRepository bookRepo;
 
 	
 	

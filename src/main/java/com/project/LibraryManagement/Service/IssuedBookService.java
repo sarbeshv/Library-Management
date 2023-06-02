@@ -1,6 +1,5 @@
 package com.project.LibraryManagement.Service;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +10,19 @@ import com.project.LibraryManagement.common.Constant;
 import com.project.LibraryManagement.entity.Books;
 import com.project.LibraryManagement.entity.IssuedBook;
 
+
+
 @Service
 public class IssuedBookService {
 
 	@Autowired
 	private IssuedBookRepository issuedBookRepository;
 	
-	public List<IssuedBook> getAllIssueBook() {
+	public List<IssuedBook> getAll() {
 		return issuedBookRepository.findAll();
 	}
 	
-	public IssuedBook getIssueBookById(Long id) {
+	public IssuedBook get(Long id) {
 		return issuedBookRepository.findById(id).get();
 	}
 	
@@ -33,9 +34,13 @@ public class IssuedBookService {
 		return issuedBookRepository.save(issuedBook);
 	}
 	
-	public IssuedBook addIssueBook(IssuedBook issuedBook) {
+	public IssuedBook addNew(IssuedBook issuedBook) {
 		issuedBook.setReturned( Constant.BOOK_NOT_RETURNED );
 		return issuedBookRepository.save(issuedBook);
+	}
+	public List<IssuedBook> findAllIssue(Long id){
+		return issuedBookRepository.findAllByIssueId(id);
+		
 	}
 
 }

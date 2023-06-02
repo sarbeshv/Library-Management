@@ -7,21 +7,22 @@ import  com.project.LibraryManagement.common.APIResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class LoginController {
 	
 	@Autowired
 	LoginService loginService;
 
-	@PostMapping("/signup")
+	@PostMapping("/Register")
 	public ResponseEntity<APIResponse> signUp( @RequestBody SignUpRequestDTO signupDTo) {
 		APIResponse response = loginService.signUp(signupDTo);
-		
+		System.out.println(signupDTo);
 		return ResponseEntity
 				.status(response.getStatus())
 				.body(response);

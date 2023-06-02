@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.project.LibraryManagement.DTO.LoginRequestDTO;
@@ -49,10 +50,10 @@ public class LoginService {
 		// store
 		user1 = userRepo.save(user1);
 		
-		Map<String,Object> data = new HashMap<>();
-		  String token = jwtUtils.generateJwt(user1);
-		  data.put("accessToken", token);
-  	      response.setData(data);
+//		Map<String,Object> data = new HashMap<>();
+//		  String token = jwtUtils.generateJwt(user1);
+//		  data.put("accessToken", token);
+  	      response.setData(user1);
 		
 		return response;
 	}
@@ -64,13 +65,14 @@ public class LoginService {
 		
 		if(user == null) {
 			response.setData("User login failed");
+			response.setStatus(403);
 			return response;
 		}
 		
-		Map<String,Object> data = new HashMap<>();
-		  String token = jwtUtils.generateJwt(user);
-		  data.put("accessToken", token);
-    	  response.setData(data);	
+//		Map<String,Object> data = new HashMap<>();
+//		  String token = jwtUtils.generateJwt(user);
+//		  data.put("accessToken", token);
+    	  response.setData(user);	
 		
 			return response;
 

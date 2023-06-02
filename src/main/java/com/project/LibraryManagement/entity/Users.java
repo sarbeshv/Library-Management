@@ -22,18 +22,27 @@ public class Users {
 	@Id
 	@GeneratedValue
 	private Long userId;
+	
 	@Column(nullable = false)
 	private String email;
+	
 //	@Column(nullable = false)
 //	private String userType;
+	
 	@Column(nullable = false)
 	private String userName;
+	
 	@Column(nullable = false)
 	private String password;
+	
 	private Integer loginCount = 0;
+	
 	private String ssoType;
+	
 	private Date loginAt;
+	
 	private Date createdAt;
+	
 	private Date updatedAt;
 	
 	
