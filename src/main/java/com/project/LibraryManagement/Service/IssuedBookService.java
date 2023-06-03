@@ -42,5 +42,9 @@ public class IssuedBookService {
 		return issuedBookRepository.findAllByIssueId(id);
 		
 	}
+	public void delete(Long id) {
+	    issuedBookRepository.deleteById(id);
+	}
+
 
 }

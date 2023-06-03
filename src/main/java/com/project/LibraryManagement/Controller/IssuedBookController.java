@@ -152,4 +152,16 @@ public class IssuedBookController {
 		
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public String delete(@PathVariable(name = "id") Long id) {
+	    try {
+	        issuedBookService.delete(id);
+	        return "success";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "error";
+	    }
+	}
+
+	
 }

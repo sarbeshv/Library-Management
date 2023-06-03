@@ -28,10 +28,13 @@ public class BookService {
 		 response.setData(bookData);
 		return response;
 	}
+	
+	
 	public boolean checkIfBookExists(String bookName) {
 	    return bookRepository.existsByBookName(bookName);
 	}
 
+	
 	public APIResponse viewBookById(Long id) throws BookNotFoundException  {
 	
 		BookData viewData = new BookData();
