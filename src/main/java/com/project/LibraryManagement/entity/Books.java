@@ -22,8 +22,6 @@ import lombok.ToString;
 @Table(name ="Books")
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 
 public class Books {
